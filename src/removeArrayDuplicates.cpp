@@ -13,7 +13,45 @@ NOTES: Don't create new array, try to change the input array.
 
 #include <stdio.h>
 
+
+void compress(int *num, int length){
+
+
+	int tempIndex = 1;
+	int i, j;
+
+
+	for (i = 1; i < length; i++){
+
+		for (j = 0; j < i; j++){
+			if (num[i] == num[j]){
+				break;
+
+			}
+
+		}
+	
+		if (j == i){
+			num[tempIndex] = num[i];
+			tempIndex++;
+		}
+
+	}
+
+}
+
+
 void * removeArrayDuplicates(int *Arr, int len)
 {
-	return NULL;
+
+	if (Arr == NULL)
+		return NULL;
+
+	if (len < 0)
+		return NULL;
+	else{
+		compress(Arr, len);
+	}
+
+
 }
