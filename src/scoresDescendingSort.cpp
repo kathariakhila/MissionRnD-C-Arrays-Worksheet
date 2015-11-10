@@ -20,6 +20,120 @@ struct student {
 	int score;
 };
 
+void merge(struct student *students, int min, int mid, int max){
+
+	struct student tmp[30];
+	int i, j, k, m;
+
+	j = min;
+
+	int index = 0;
+
+	m = mid + 1;
+
+	for (i = min; j <= mid && m <= max; i++){
+
+		if (students[j].score >= students[m].score)
+		{
+			index = 0;
+			while (students[j].name[index] != '\0'){
+
+				tmp[i].name[index] = students[j].name[index];
+				index++;
+			}
+			tmp[i].name[index] = '\0';
+			tmp[i].score = students[j].score;
+			j++;
+		}
+		else
+		{
+			index = 0;
+			while (students[m].name[index] != '\0'){
+
+				tmp[i].name[index] = students[m].name[index];
+				index++;
+			}
+			tmp[i].name[index] = '\0';
+			tmp[i].score = students[m].score;
+
+			m++;
+		}
+	}
+	if (j>mid){
+		for (k = m; k <= max; k++){
+
+			index = 0;
+			while (students[k].name[index] != '\0'){
+
+				tmp[i].name[index] = students[k].name[index];
+				index++;
+			}
+			tmp[i].name[index] = '\0';
+			tmp[i].score = students[k].score;
+
+			i++;
+		}
+	}
+	else{
+
+		for (k = j; k <= mid; k++){
+
+
+			index = 0;
+			while (students[k].name[index] != '\0'){
+
+				tmp[i].name[index] = students[k].name[index];
+				index++;
+			}
+			tmp[i].name[index] = '\0';
+			tmp[i].score = students[k].score;
+
+			i++;
+		}
+	}
+	for (k = min; k <= max; k++){
+
+		index = 0;
+		while (tmp[k].name[index] != '\0'){
+			students[k].name[index] = tmp[k].name[index];
+			index++;
+		}
+
+		students[k].name[index] = '\0';
+		students[k].score = tmp[k].score;
+	}
+}
+
+
+void mergeSort(struct student *students, int min, int max){
+
+	int mid;
+
+	if (min<max)
+	{
+		mid = (min + max) / 2;
+		mergeSort(students, min, mid);
+		mergeSort(students, mid + 1, max);
+
+		merge(students, min, mid, max);
+	}
+}
+
+
+
+
+
+
 void * scoresDescendingSort(struct student *students, int len) {
-	return NULL;
+	
+	if (students == NULL)
+		return NULL;
+	
+	if (len < 0)
+		return NULL;
+
+	else{
+		mergeSort(students, 0, len-1);
+	}
+
 }
